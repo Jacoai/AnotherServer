@@ -113,7 +113,7 @@ int __cdecl main(void)
 
     ClientSockets = new SOCKET[MAX_MEMBERS];
 
-    char m_connet[] = "Connec...;;;5";
+    char m_connet[] = "Connected";
     // Accept a client sockets
     for (;; Sleep(75))
     {
@@ -128,47 +128,18 @@ int __cdecl main(void)
         {
             printf("clent connect");
             ClientSockets[ClientCount] = ClientSocket;
-            send(ClientSockets[ClientCount], m_connet, strlen(m_connet), NULL);
+            send(ClientSockets[ClientCount], m_connet, (int)strlen(m_connet), NULL);
             ClientCount++;
 
             CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)SendMessageToClient,
                 (LPVOID)(ClientCount - 1), NULL, NULL);
         }
 
-    }      
-    
+    }        
  
 
     // No longer need server socket
     closesocket(ListenSocket);
-
-    //// Receive until the peer shuts down the connection
-    //do {
-    //    ZeroMemory(recvbuf, recvbuflen);
-    //    iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
-    //    if (iResult > 0) {
-    //        printf("Bytes received: %d\n", iResult);
-
-    //        // Echo the buffer back to the sender
-    //        iSendResult = send(ClientSocket, recvbuf, iResult, 0);
-    //        if (iSendResult == SOCKET_ERROR) {
-    //            printf("send failed with error: %d\n", WSAGetLastError());
-    //            closesocket(ClientSocket);
-    //            WSACleanup();
-    //            return 1;
-    //        }
-    //        printf("Bytes sent: %d\n", iSendResult);
-    //    }
-    //    else if (iResult == 0)
-    //        printf("Connection closing...\n");
-    //    else {
-    //        printf("recv failed with error: %d\n", WSAGetLastError());
-    //        closesocket(ClientSocket);
-    //        WSACleanup();
-    //        return 1;
-    //    }
-
-    //} while (iResult > 0);
 
     // shutdown the connection since we're done
     iResult = shutdown(ClientSocket, SD_SEND);
