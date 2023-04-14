@@ -18,7 +18,7 @@
 
 class Socket
 {
-private:
+public:
 
     WSADATA wsaData;
     struct addrinfo* result = NULL,

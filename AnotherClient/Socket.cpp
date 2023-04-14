@@ -123,7 +123,9 @@ int Socket::Connect()
 //        // Send an initial buffer
 //
 //        std::cin.getline(sendbuf, DEFAULT_BUFLEN);
+// 
 //        iResult = send(ConnectSocket, sendbuf, (int)strlen(sendbuf), 0);
+// 
 //        if (iResult == SOCKET_ERROR) {
 //            printf("send failed with error: %d\n", WSAGetLastError());
 //            closesocket(ConnectSocket);
