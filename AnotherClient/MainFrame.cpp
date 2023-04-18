@@ -39,6 +39,16 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 
 	CreateStatusBar();
 
+	
+}
+
+
+void MainFrame::OnBtnCliced(wxCommandEvent& evt)
+{
+	int res = mySoket->Connect();
+	if(res == SOCKET_ERROR)
+		wxLogStatus("Oh no, connectiin fail");
+
 	const auto f = [this]()
 	{
 		int res = 0;
@@ -51,7 +61,7 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 				CallAfter([this]()
 					{
 						this->textChat->ChangeValue(mySoket->recvbuf);
-					}						
+					}
 				);
 			}
 		}
@@ -59,14 +69,6 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 
 	std::thread bck{ f };
 	bck.detach();
-}
-
-
-void MainFrame::OnBtnCliced(wxCommandEvent& evt)
-{
-	int res = mySoket->Connect();
-	if(res == SOCKET_ERROR)
-		wxLogStatus("Oh no, connectiin fail");
 }
 
 void MainFrame::TextChanged(wxCommandEvent& evt)
