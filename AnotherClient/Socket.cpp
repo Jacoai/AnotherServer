@@ -1,4 +1,5 @@
 #include "Socket.h"
+#include <thread>
 
 Socket::Socket()
 {
@@ -10,6 +11,9 @@ Socket::Socket()
  	iResult = getaddrinfo(0, DEFAULT_PORT, &hints, &result);
 
 }
+
+// Receive until the peer closes the connection
+
 
 int Socket::Connect()
 {
@@ -33,30 +37,24 @@ int Socket::Connect()
                 break;
             }
         
-            freeaddrinfo(result);
+    (result);   
     
-
+    
     return 0;
 }
 
-
-//
-//    // Receive until the peer closes the connection
-//void RecvMessage(char* recvbuf, int recvbuflen)
-//{
-//    int iResult;
-//    for (;; Sleep(75))
-//    {//
-//        std::memset(recvbuf, 0, sizeof(recvbuf));
-//
-//        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-//        if (iResult > 0)
-//        {
-//            std::cout << "Bytes received:" << iResult << std::endl;
-//            std::cout << "Data: " << recvbuf;
-//        }            
-//    }
-//}
+ void Socket::RecvMessage()
+ {
+        int iResult;
+        for (;; Sleep(75))
+        {
+          std::memset(recvbuf, 0, sizeof(recvbuf));
+        
+          iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+                        
+        }
+        
+}
 
 
 //int __cdecl main(int argc, char** argv)

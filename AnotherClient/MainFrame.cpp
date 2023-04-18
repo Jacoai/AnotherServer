@@ -1,5 +1,6 @@
 #include "MainFrame.h"
 #include "Socket.h"
+#include <thread>
 
 enum IDs
 {
@@ -11,10 +12,12 @@ enum IDs
 };
 
 wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
-	EVT_BUTTON(BUTTON_ID_Entry, MainFrame::OnBtnCliced)
-	EVT_BUTTON(BUTTON_ID_Send, MainFrame::Send)
-	EVT_TEXT(TEXT_ID_Input, MainFrame::TextChanged)
+EVT_BUTTON(BUTTON_ID_Entry, MainFrame::OnBtnCliced)
+EVT_BUTTON(BUTTON_ID_Send, MainFrame::Send)
+EVT_TEXT(TEXT_ID_Input, MainFrame::TextChanged)
 wxEND_EVENT_TABLE()
+
+void changeText(char* recv);
 
 MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 {
@@ -26,14 +29,38 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 	
 	wxTextCtrl* textInput = new wxTextCtrl(panel, TEXT_ID_Input, "", wxPoint(15, 407), wxSize(460, 75), wxTE_MULTILINE);
 	wxTextCtrl* textNick = new wxTextCtrl(panel, TEXT_ID_Nick, "", wxPoint(9, 73), wxSize(200, 20));
-	wxTextCtrl* textChat = new wxTextCtrl(panel, TEXT_ID_Chat, "", wxPoint(15,150), wxSize(550,225), wxTE_READONLY);
+	textChat= new wxTextCtrl(panel, TEXT_ID_Chat, "", wxPoint(15,150), wxSize(550,225), wxTE_READONLY);
 
 	
 	wxStaticText* hint1 = new wxStaticText(panel, wxID_ANY, "¬ведите ваше сообщение:", wxPoint(15, 382), wxSize(156, 15));
 	wxStaticText* hintNick = new wxStaticText(panel, wxID_ANY, "¬ведите ваш ник:",wxPoint(9,53), wxSize(103,15));
 
+	
+
 	CreateStatusBar();
+
+	const auto f = [this]()
+	{
+		int res = 0;
+		for (;; Sleep(75))
+		{
+			std::memset(mySoket->recvbuf, 0, sizeof(mySoket->recvbuf));
+			res = recv(mySoket->ConnectSocket, mySoket->recvbuf, mySoket->recvbuflen, 0);
+			if (res > 0)
+			{
+				CallAfter([this]()
+					{
+						this->textChat->ChangeValue(mySoket->recvbuf);
+					}						
+				);
+			}
+		}
+	};
+
+	std::thread bck{ f };
+	bck.detach();
 }
+
 
 void MainFrame::OnBtnCliced(wxCommandEvent& evt)
 {

@@ -29,10 +29,15 @@ public:
     int iResult;
     int recvbuflen = DEFAULT_BUFLEN;
     SOCKET ConnectSocket = INVALID_SOCKET;
+    bool flagRecv = false;
 
 public:
     Socket();
     int Connect();
+    void RecvMessage();
+
+//private:
+    
 
 
 };

@@ -11,10 +11,13 @@ public:
 	wxDECLARE_EVENT_TABLE();
 	void OnBtnCliced(wxCommandEvent& evt);
 	void TextChanged(wxCommandEvent& evt);
+	void TextRecv(wxCommandEvent& evt);
 	void Send(wxCommandEvent& evt);
+	wxTextCtrl* textChat;
 
 private:
 	Socket* mySoket = new Socket();
 	std::string buf;
+
 };
 
