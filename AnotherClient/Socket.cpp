@@ -4,17 +4,19 @@
 Socket::Socket()
 {
 	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
-	    ZeroMemory(&hints, sizeof(hints));
+	ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
- 	iResult = getaddrinfo(0, DEFAULT_PORT, &hints, &result);
 
+    const char* part = (const char*)DEFAULT_PORT;
+    
+
+
+ 	iResult = getaddrinfo(0, part, &hints, &result);
 }
 
 // Receive until the peer closes the connection
-
-
 int Socket::Connect()
 {
     for (ptr = result; ptr != NULL; ptr = ptr->ai_next) {
@@ -41,19 +43,6 @@ int Socket::Connect()
     
     
     return 0;
-}
-
- void Socket::RecvMessage()
- {
-        int iResult;
-        for (;; Sleep(75))
-        {
-          std::memset(recvbuf, 0, sizeof(recvbuf));
-        
-          iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-                        
-        }
-        
 }
 
 

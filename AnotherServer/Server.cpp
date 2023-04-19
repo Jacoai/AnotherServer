@@ -79,7 +79,7 @@ int __cdecl main(void)
         return 1;
     }
 
-
+   
     // Create a SOCKET for the server to listen for client connections.
     ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
     if (ListenSocket == INVALID_SOCKET) {
@@ -110,6 +110,7 @@ int __cdecl main(void)
     }
         
     printf("Server start\n");
+    printf((char*)result->ai_addr);
 
     ClientSockets = new SOCKET[MAX_MEMBERS];
 

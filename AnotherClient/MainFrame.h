@@ -2,6 +2,7 @@
 #include <wx/wx.h>
 #include "Socket.h"
 #include <string>
+#include "settingsPanel.h"
 
 class MainFrame : public wxFrame
 {
@@ -11,8 +12,9 @@ public:
 	wxDECLARE_EVENT_TABLE();
 	void OnBtnCliced(wxCommandEvent& evt);
 	void TextChanged(wxCommandEvent& evt);
-	void TextRecv(wxCommandEvent& evt);
 	void Send(wxCommandEvent& evt);
+	void SetIp(wxCommandEvent& evt);
+	void SetHostport(wxCommandEvent& evt);
 	wxTextCtrl* textChat;
 
 private:
