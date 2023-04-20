@@ -3,17 +3,12 @@
 
 Socket::Socket()
 {
-	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
 
-    const char* part = (const char*)DEFAULT_PORT;
-    
-
-
- 	iResult = getaddrinfo(0, part, &hints, &result);
 }
 
 // Receive until the peer closes the connection
@@ -26,7 +21,7 @@ int Socket::Connect()
                 if (ConnectSocket == INVALID_SOCKET) {
                     printf("socket failed with error: %ld\n", WSAGetLastError());
                     WSACleanup();
-                    return 1;
+                    return -1;
                 }
         
                 // Connect to server.
@@ -36,13 +31,17 @@ int Socket::Connect()
                     ConnectSocket = INVALID_SOCKET;
                     continue;
                 }
-                break;
-            }
-        
-    (result);   
-    
-    
-    return 0;
+                
+                return 0;
+    }   
+    return -1;
+}
+
+int Socket::Setaddrinfo()
+{
+   freeaddrinfo(result);
+    iResult = getaddrinfo(DEFAULT_IP, DEFAULT_PORT, &hints, &result);
+    return iResult;
 }
 
 

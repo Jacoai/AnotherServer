@@ -14,30 +14,26 @@
 #pragma comment (lib, "AdvApi32.lib")
 
 #define DEFAULT_BUFLEN 512
-#define port "1287"
+
 
 class Socket
 {
 public:
 
     WSADATA wsaData;
-    struct addrinfo* result = NULL,*ptr = NULL, hints;
+    struct addrinfo* result = NULL, *ptr = NULL, hints;
     char sendbuf[DEFAULT_BUFLEN] = "";
     char recvbuf[DEFAULT_BUFLEN];
     int iResult;
     int recvbuflen = DEFAULT_BUFLEN;
     SOCKET ConnectSocket = INVALID_SOCKET;
     bool flagRecv = false;
-    //const char* DEFAULT_PORT = "27015";
-    int DEFAULT_PORT = 27015;
+    const char* DEFAULT_PORT = "27015";
+    const char* DEFAULT_IP = "127.0.0.1";
     
 
 public:
     Socket();
-    int Connect();
-
-//private:
-    
-
-
+    int Connect();  
+    int Setaddrinfo();
 };

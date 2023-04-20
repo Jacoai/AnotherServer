@@ -2,7 +2,6 @@
 #include <wx/wx.h>
 #include "Socket.h"
 #include <string>
-#include "settingsPanel.h"
 
 class MainFrame : public wxFrame
 {

@@ -54,12 +54,15 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 
 void MainFrame::OnBtnCliced(wxCommandEvent& evt)
 {
+	wxLogStatus("Connecting...");
+	mySoket->Setaddrinfo();
 	int res = mySoket->Connect();
-	if (res == SOCKET_ERROR)
+	if (res != 0)
 		wxLogStatus("Oh no, connectiin fail");
 
 	else
 	{
+		wxLogStatus("Connected");
 		const auto f = [this]()
 		{
 			int res = 0;
