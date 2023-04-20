@@ -44,6 +44,17 @@ int Socket::Setaddrinfo()
     return iResult;
 }
 
+const char* Socket::GetIP()
+{
+    return DEFAULT_IP;
+}
+
+
+const char* Socket::GetPort()
+{
+    return DEFAULT_PORT;
+}
+
 
 //int __cdecl main(int argc, char** argv)
 //{

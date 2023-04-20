@@ -15,6 +15,8 @@ public:
 	void SetIp(wxCommandEvent& evt);
 	void SetHostport(wxCommandEvent& evt);
 	wxTextCtrl* textChat;
+	wxStaticText* IpLabel;
+	wxStaticText* PortLabel;
 
 private:
 	Socket* mySoket = new Socket();

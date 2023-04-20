@@ -38,6 +38,10 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 	wxStaticText* hint1 = new wxStaticText(panel, wxID_ANY, "Введите ваше сообщение:", wxPoint(15, 382), wxSize(156, 15));
 	wxStaticText* hintNick = new wxStaticText(panel, wxID_ANY, "Введите ваш ник:",wxPoint(9,53), wxSize(103,15));
 
+	wxStaticText* ipHint = new wxStaticText(panel, wxID_ANY, "IP адрес сервера: ", wxPoint(418, 61), wxSize(111, 15));
+	wxStaticText* portHint = new wxStaticText(panel, wxID_ANY, "Порт сервера:", wxPoint(418,87),wxSize(85,15));
+	IpLabel = new wxStaticText(panel, wxID_ANY, "", wxPoint(528, 61), wxSize(72, 15));
+	PortLabel = new wxStaticText(panel, wxID_ANY, "", wxPoint(511, 87), wxSize(36, 15));
 
 	wxMenuBar* menubar = new wxMenuBar();
 	wxMenu* menu = new wxMenu();
@@ -47,8 +51,9 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 	menubar->Append(menu, "Меню");	
 	SetMenuBar(menubar);
 	
+	IpLabel->SetLabelText(mySoket->GetIP());
+	PortLabel->SetLabelText(mySoket->GetPort());
 	CreateStatusBar();
-	
 }
 
 
@@ -102,8 +107,11 @@ void MainFrame::SetIp(wxCommandEvent& evt)
 	wxTextEntryDialog* d = new wxTextEntryDialog(this, "Введите IP","IP");
 
 	if (d->ShowModal() == wxID_OK)
-	{
-		wxLogStatus(d->GetValue());
+	{		
+		std::string tmp = d->GetValue().ToStdString();
+		mySoket->DEFAULT_IP = tmp.c_str();
+		IpLabel->SetLabelText(mySoket->GetIP());
+
 	}
 	else 
 		wxLogStatus("not ok");
@@ -115,8 +123,9 @@ void MainFrame::SetHostport(wxCommandEvent& evt)
 
 	if (d->ShowModal() == wxID_OK)
 	{
-		wxLogStatus(d->GetValue());
-
+		std::string tmp = d->GetValue().ToStdString();
+		mySoket->DEFAULT_PORT = tmp.c_str();
+		PortLabel->SetLabelText(mySoket->GetPort());
 	}
 	else
 		wxLogStatus("not ok");

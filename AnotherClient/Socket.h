@@ -36,4 +36,6 @@ public:
     Socket();
     int Connect();  
     int Setaddrinfo();
+    const char* GetIP();
+    const char* GetPort();
 };
