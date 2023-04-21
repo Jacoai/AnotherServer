@@ -14,13 +14,14 @@ public:
 	void Send(wxCommandEvent& evt);
 	void SetIp(wxCommandEvent& evt);
 	void SetHostport(wxCommandEvent& evt);
-	wxTextCtrl* textChat;
-	wxStaticText* IpLabel;
-	wxStaticText* PortLabel;
 
 private:
 	Socket* mySoket = new Socket();
 	std::string buf;
 
+	wxStaticText* IpLabel;
+	wxStaticText* PortLabel;
+	wxTextCtrl* textInput;
+	wxTextCtrl* textChat;
 };
 
