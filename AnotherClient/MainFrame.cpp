@@ -32,7 +32,7 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 	wxButton* btnSend = new wxButton(panel, BUTTON_ID_Send, "Отправить", wxPoint(496,426), wxSize(90,35));
 		
 	textInput = new wxTextCtrl(panel, TEXT_ID_Input, "", wxPoint(15, 407), wxSize(460, 75), wxTE_MULTILINE);
-	wxTextCtrl* textNick = new wxTextCtrl(panel, TEXT_ID_Nick, "", wxPoint(9, 73), wxSize(200, 20));
+	textNick = new wxTextCtrl(panel, TEXT_ID_Nick, "", wxPoint(9, 73), wxSize(200, 20));
 	textChat = new wxTextCtrl(panel, TEXT_ID_Chat, "", wxPoint(15, 150), wxSize(550, 225), wxTE_READONLY | wxTE_MULTILINE);
 
 	wxStaticText* hint1 = new wxStaticText(panel, wxID_ANY, "Введите ваше сообщение:", wxPoint(15, 382), wxSize(156, 15));
@@ -59,6 +59,12 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 
 void MainFrame::OnBtnCliced(wxCommandEvent& evt)
 {
+	if (textNick->GetValue() == "")
+	{
+		wxLogStatus("Вы не ввели ник");
+		return;
+	}
+
 	wxLogStatus("Connecting...");
 	mySoket->Setaddrinfo();
 	int res = mySoket->Connect();
@@ -68,6 +74,9 @@ void MainFrame::OnBtnCliced(wxCommandEvent& evt)
 	else
 	{
 		wxLogStatus("Connected");
+		strcpy(mySoket->sendbuf, textNick->GetValue().ToStdString().c_str());
+		int num = send(mySoket->ConnectSocket, mySoket->sendbuf, (int)strlen(mySoket->sendbuf), 0);
+
 		const auto f = [this]()
 		{
 			int res = 0;

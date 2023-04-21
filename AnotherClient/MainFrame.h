@@ -23,5 +23,6 @@ private:
 	wxStaticText* PortLabel;
 	wxTextCtrl* textInput;
 	wxTextCtrl* textChat;
+	wxTextCtrl* textNick;
 };
 

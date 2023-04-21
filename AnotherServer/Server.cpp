@@ -110,7 +110,6 @@ int __cdecl main(void)
     }
         
     printf("Server start\n");
-    printf((char*)result->ai_addr);
 
     ClientSockets = new SOCKET[MAX_MEMBERS];
 
