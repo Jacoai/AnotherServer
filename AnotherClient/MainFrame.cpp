@@ -2,6 +2,7 @@
 #include "Socket.h"
 #include <thread>
 
+
 enum IDs
 {
 	BUTTON_ID_Entry = 2,
@@ -28,8 +29,10 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 	
 	wxPanel* panel = new wxPanel(this);
 	
+	
 	wxButton* buttonEntry = new wxButton(panel, BUTTON_ID_Entry, "Войти", wxPoint(225,60), wxSize(150,50));
 	wxButton* btnSend = new wxButton(panel, BUTTON_ID_Send, "Отправить", wxPoint(496,426), wxSize(90,35));
+	
 		
 	textInput = new wxTextCtrl(panel, TEXT_ID_Input, "", wxPoint(15, 407), wxSize(460, 75), wxTE_MULTILINE);
 	textNick = new wxTextCtrl(panel, TEXT_ID_Nick, "", wxPoint(9, 73), wxSize(200, 20));
@@ -54,6 +57,16 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 	IpLabel->SetLabelText(mySoket->GetIP());
 	PortLabel->SetLabelText(mySoket->GetPort());
 	CreateStatusBar();
+
+	//Color
+	panel->SetBackgroundColour(wxColor(68,200,236));
+	panel->Refresh();
+	btnSend->SetBackgroundColour(wxColor(233, 182, 81));
+	btnSend->Refresh();
+	buttonEntry->SetBackgroundColour(wxColor(98, 233, 190));
+	buttonEntry->Refresh();
+	
+
 }
 
 
