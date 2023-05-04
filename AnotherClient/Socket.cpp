@@ -8,7 +8,6 @@ Socket::Socket()
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
-
 }
 
 // Receive until the peer closes the connection
@@ -18,8 +17,7 @@ int Socket::Connect()
         
                 // Create a SOCKET for connecting to server
                 ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
-                if (ConnectSocket == INVALID_SOCKET) {
-                    printf("socket failed with error: %ld\n", WSAGetLastError());
+                if (ConnectSocket == INVALID_SOCKET) {                 
                     WSACleanup();
                     return -1;
                 }
@@ -39,8 +37,9 @@ int Socket::Connect()
 
 int Socket::Setaddrinfo()
 {
-   freeaddrinfo(result);
+    freeaddrinfo(result);
     iResult = getaddrinfo(DEFAULT_IP, DEFAULT_PORT, &hints, &result);
+
     return iResult;
 }
 
@@ -53,6 +52,16 @@ const char* Socket::GetIP()
 const char* Socket::GetPort()
 {
     return DEFAULT_PORT;
+}
+
+void Socket::SetIP(const char* ip)
+{
+    DEFAULT_IP = ip;
+}
+
+void Socket::SetHPort(const char* port)
+{
+    DEFAULT_PORT = port;
 }
 
 

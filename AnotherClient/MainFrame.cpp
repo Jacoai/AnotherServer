@@ -26,9 +26,14 @@ void changeText(char* recv);
 
 MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 {
-	
-	wxPanel* panel = new wxPanel(this);
-	
+	mySoket = new Socket();
+	if (mySoket->iResult != 0)
+	{
+		wxLogError("WSA startup error");
+		this->Close();
+	}
+
+	wxPanel* panel = new wxPanel(this);	
 	
 	wxButton* buttonEntry = new wxButton(panel, BUTTON_ID_Entry, "Войти", wxPoint(225,60), wxSize(150,50));
 	wxButton* btnSend = new wxButton(panel, BUTTON_ID_Send, "Отправить", wxPoint(496,426), wxSize(90,35));
@@ -80,9 +85,16 @@ void MainFrame::OnBtnCliced(wxCommandEvent& evt)
 
 	wxLogStatus("Connecting...");
 	mySoket->Setaddrinfo();
+
+	if (mySoket->iResult != 0)
+	{
+		wxLogError("Setaddrinfo error");
+		this->Close();
+	}
+
 	int res = mySoket->Connect();
 	if (res != 0)
-		wxLogStatus("Oh no, connectiin fail");
+		wxLogStatus("Oh no, connection fail");
 
 	else
 	{
@@ -132,7 +144,7 @@ void MainFrame::SetIp(wxCommandEvent& evt)
 	if (d->ShowModal() == wxID_OK)
 	{		
 		std::string tmp = d->GetValue().ToStdString();
-		mySoket->DEFAULT_IP = tmp.c_str();
+		mySoket->SetIP(tmp.c_str());
 		IpLabel->SetLabelText(mySoket->GetIP());
 
 	}
@@ -147,7 +159,7 @@ void MainFrame::SetHostport(wxCommandEvent& evt)
 	if (d->ShowModal() == wxID_OK)
 	{
 		std::string tmp = d->GetValue().ToStdString();
-		mySoket->DEFAULT_PORT = tmp.c_str();
+		mySoket->SetHPort(tmp.c_str());
 		PortLabel->SetLabelText(mySoket->GetPort());
 	}
 	else

@@ -16,7 +16,7 @@ public:
 	void SetHostport(wxCommandEvent& evt);
 
 private:
-	Socket* mySoket = new Socket();
+	Socket* mySoket;
 	std::string buf;
 
 	wxStaticText* IpLabel;
