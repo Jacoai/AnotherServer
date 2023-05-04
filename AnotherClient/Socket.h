@@ -19,7 +19,7 @@ class Socket
 {
 
 private:
-    const char* DEFAULT_PORT = "27015";
+    const char* DEFAULT_PORT = "27016";
     const char* DEFAULT_IP = "127.0.0.1";    
     WSADATA wsaData;
     struct addrinfo* result = NULL, *ptr = NULL, hints;
@@ -30,6 +30,7 @@ public:
     int recvbuflen = DEFAULT_BUFLEN;
     SOCKET ConnectSocket = INVALID_SOCKET;
     int iResult = 0;
+    bool changed = false;
 
     Socket();
     int Connect();  

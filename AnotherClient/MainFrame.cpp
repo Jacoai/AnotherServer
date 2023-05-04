@@ -84,7 +84,9 @@ void MainFrame::OnBtnCliced(wxCommandEvent& evt)
 	}
 
 	wxLogStatus("Connecting...");
-	mySoket->Setaddrinfo();
+
+	if(mySoket->changed == false)
+		mySoket->Setaddrinfo();
 
 	if (mySoket->iResult != 0)
 	{
@@ -146,7 +148,8 @@ void MainFrame::SetIp(wxCommandEvent& evt)
 		std::string tmp = d->GetValue().ToStdString();
 		mySoket->SetIP(tmp.c_str());
 		IpLabel->SetLabelText(mySoket->GetIP());
-
+		mySoket->Setaddrinfo();
+		mySoket->changed = true;
 	}
 	else 
 		wxLogStatus("not ok");
@@ -160,6 +163,8 @@ void MainFrame::SetHostport(wxCommandEvent& evt)
 	{
 		std::string tmp = d->GetValue().ToStdString();
 		mySoket->SetHPort(tmp.c_str());
+		mySoket->Setaddrinfo();
+		mySoket->changed = true;
 		PortLabel->SetLabelText(mySoket->GetPort());
 	}
 	else

@@ -17,6 +17,7 @@ public:
 
 private:
 	Socket* mySoket;
+	
 	std::string buf;
 
 	wxStaticText* IpLabel;
