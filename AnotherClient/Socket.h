@@ -19,8 +19,8 @@ class Socket
 {
 
 private:
-    const char* DEFAULT_PORT = "27016";
-    const char* DEFAULT_IP = "127.0.0.1";    
+    const char* DEFAULT_PORT = "27015";
+    const char* DEFAULT_IP = "192.168.0.108";    
     WSADATA wsaData;
     struct addrinfo* result = NULL, *ptr = NULL, hints;
 public:

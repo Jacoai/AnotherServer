@@ -25,5 +25,7 @@ private:
 	wxTextCtrl* textInput;
 	wxTextCtrl* textChat;
 	wxTextCtrl* textNick;
+	wxButton* btnSend;
+	wxButton* buttonEntry;
 };
 

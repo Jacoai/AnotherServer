@@ -22,6 +22,7 @@ int ClientCount = 0;
 
 SOCKET ListenSocket = INVALID_SOCKET;
 SOCKET ClientSocket = INVALID_SOCKET;
+//TODO:
 SOCKET* ClientSockets;
 
 void SendMessageToClient(int ID)

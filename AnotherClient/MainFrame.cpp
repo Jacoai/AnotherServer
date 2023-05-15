@@ -35,13 +35,14 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 
 	wxPanel* panel = new wxPanel(this);	
 	
-	wxButton* buttonEntry = new wxButton(panel, BUTTON_ID_Entry, "Войти", wxPoint(225,60), wxSize(150,50));
-	wxButton* btnSend = new wxButton(panel, BUTTON_ID_Send, "Отправить", wxPoint(496,426), wxSize(90,35));
+	buttonEntry = new wxButton(panel, BUTTON_ID_Entry, "Войти", wxPoint(225,60), wxSize(150,50));
+	btnSend = new wxButton(panel, BUTTON_ID_Send, "Отправить", wxPoint(496,426), wxSize(90,35));
 	
 		
 	textInput = new wxTextCtrl(panel, TEXT_ID_Input, "", wxPoint(15, 407), wxSize(460, 75), wxTE_MULTILINE);
 	textNick = new wxTextCtrl(panel, TEXT_ID_Nick, "", wxPoint(9, 73), wxSize(200, 20));
 	textChat = new wxTextCtrl(panel, TEXT_ID_Chat, "", wxPoint(15, 150), wxSize(550, 225), wxTE_READONLY | wxTE_MULTILINE);
+
 
 	wxStaticText* hint1 = new wxStaticText(panel, wxID_ANY, "Введите ваше сообщение:", wxPoint(15, 382), wxSize(156, 15));
 	wxStaticText* hintNick = new wxStaticText(panel, wxID_ANY, "Введите ваш ник:",wxPoint(9,53), wxSize(103,15));
@@ -50,6 +51,10 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 	wxStaticText* portHint = new wxStaticText(panel, wxID_ANY, "Порт сервера:", wxPoint(418,87),wxSize(85,15));
 	IpLabel = new wxStaticText(panel, wxID_ANY, "", wxPoint(528, 61), wxSize(72, 15));
 	PortLabel = new wxStaticText(panel, wxID_ANY, "", wxPoint(511, 87), wxSize(36, 15));
+	
+	textChat->Disable();
+	textInput->Disable();
+	btnSend->Disable();
 
 	wxMenuBar* menubar = new wxMenuBar();
 	wxMenu* menu = new wxMenu();
@@ -70,7 +75,6 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 	btnSend->Refresh();
 	buttonEntry->SetBackgroundColour(wxColor(98, 233, 190));
 	buttonEntry->Refresh();
-	
 
 }
 
@@ -103,6 +107,12 @@ void MainFrame::OnBtnCliced(wxCommandEvent& evt)
 		wxLogStatus("Connected");
 		strcpy(mySoket->sendbuf, textNick->GetValue().ToStdString().c_str());
 		int num = send(mySoket->ConnectSocket, mySoket->sendbuf, (int)strlen(mySoket->sendbuf), 0);
+
+		btnSend->Enable();
+		textChat->Enable();
+		textInput->Enable();
+		buttonEntry->Disable();
+		textNick->Disable();
 
 		const auto f = [this]()
 		{
